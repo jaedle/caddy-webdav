@@ -1,0 +1,9 @@
+build_and_deploy:
+  image: docker:stable
+  stage: build
+  script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker image build --no-cache --pull -t jaedle/caddy-webdav:latest-arm32v7 .
+    - docker image push jaedle/caddy-webdav:latest-arm32v7
+  only:
+    - main
